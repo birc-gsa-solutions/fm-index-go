@@ -1,0 +1,21 @@
+name: 'Configure and build'
+description: 'Setting up and building the project'
+runs:
+  using: "composite"
+  steps:
+    - name: "Get project code"
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Build
+      run: go build -v ./...
+      shell: bash
+
+    - name: Install binaries
+      run: GOBIN=$PWD go install ./...
+      shell: bash
+
