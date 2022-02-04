@@ -4,6 +4,12 @@
 
 package shared
 
-func Hello() string {
-	return "Hello World"
+import "fmt"
+
+func TodoPreprocess(genome string) string {
+	return fmt.Sprintf("Preprocess the genome in %s", genome)
+}
+
+func TodoMap(genome, reads string) string {
+	return fmt.Sprintf("Search for reads from %s in the genome in %s", reads, genome)
 }
