@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	// Directories in the root of the repo can be imported
-	// as long as we pretend that they sit relative to the
-	// url birc.au.dk/gsa, like this for the example 'shared':
-	"birc.au.dk/gsa/shared"
+	"birc.au.dk/gsa"
 )
 
 func main() {
@@ -17,10 +14,16 @@ func main() {
 		os.Exit(1)
 	}
 	if os.Args[1] == "-p" {
-		// preprocess
-		fmt.Println(shared.TodoPreprocess(os.Args[2]))
+		gsa.BwtPreproc(os.Args[2])
 	} else {
-		fmt.Println(shared.TodoMap(os.Args[1], os.Args[2]))
+		genome := gsa.ReadPreprocTables(os.Args[1])
+		gsa.ScanFastq(os.Args[2], func(rec *gsa.FastqRecord) {
+			for chrName, search := range genome {
+				search(rec.Read, func(i int32) {
+					cigar := fmt.Sprintf("%d%s", len(rec.Read), "M")
+					gsa.PrintSam(rec.Name, chrName, i, cigar, rec.Read)
+				})
+			}
+		})
 	}
-
 }

@@ -1,3 +1,3 @@
-module birc.au.dk/gsa
+module birc.au.dk
 
-go 1.17
+go 1.18
