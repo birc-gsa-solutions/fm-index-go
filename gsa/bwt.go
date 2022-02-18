@@ -122,22 +122,6 @@ func NewOTab(bwt []byte, asize int) *OTab {
 	return &otab
 }
 
-func countLetters(x []byte) int {
-	const noBytes = 256
-
-	observed := make([]int, noBytes)
-	for _, a := range x {
-		observed[a] = 1
-	}
-
-	asize := 0
-	for _, i := range observed {
-		asize += i
-	}
-
-	return asize
-}
-
 // FMIndexTables contains the preprocessed tables used for FM-index
 // searching
 type FMIndexTables struct {
@@ -145,9 +129,6 @@ type FMIndexTables struct {
 	Sa    []int32
 	Ctab  *CTab
 	Otab  *OTab
-
-	// for approx matching
-	Rotab *OTab
 }
 
 // BuildFMIndexExactTables builds the preprocessing tables for exact FM-index
