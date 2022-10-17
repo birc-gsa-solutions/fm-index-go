@@ -1,0 +1,8 @@
+name: Language specific unit tests
+description: Run Go unit tests
+runs:
+  using: composite
+  steps:
+    - name: Test
+      run: go test -v ./...
+      shell: bash
